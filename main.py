@@ -37,6 +37,7 @@ if __name__ == '__main__':
     parser.add_argument('--data_dir', type=str, default='data', help='Directory of the data')
     parser.add_argument('--model_dir', type=str, default='models', help='Directory to save models')
     parser.add_argument('--output_dir', type=str, default='outputs', help='Directory for outputs')
+    parser.add_argument('--model_path', type=str, default='models/best_model.h5', help='Path of the trained model for Streamlit')
     parser.add_argument('--epochs', type=int, default=20, help='Number of epochs for training')
     parser.add_argument('--batch_size', type=int, default=64, help='Batch size for training')
     parser.add_argument('--learning_rate', type=float, default=0.001, help='Learning rate for training')

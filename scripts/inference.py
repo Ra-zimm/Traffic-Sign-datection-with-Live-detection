@@ -3,6 +3,8 @@ import numpy as np
 import tensorflow as tf
 from PIL import Image
 import argparse
+import cv2
+
 
 def run(args):
     model_dir = args.model_dir
@@ -20,19 +22,25 @@ def run(args):
     print(f"Loading model from {model_path}...")
     model = tf.keras.models.load_model(model_path)
     
-    # Load and preprocess the image
+    # Load and preprocess the image with OpenCV (BGR), resize as in training
     print(f"Loading and processing image: {image_path}")
-    image = Image.open(image_path).resize((30, 30))
-    image_array = np.array(image) / 255.0
-    image_array = np.expand_dims(image_array, axis=0)
+    bgr = cv2.imread(image_path, cv2.IMREAD_COLOR)
+    if bgr is None:
+        print("Failed to read image.")
+        return
+    bgr = cv2.resize(bgr, (30, 30), interpolation=cv2.INTER_NEAREST)
+
+    # Match training input (raw uint8)
+    input_batch = np.expand_dims(bgr, axis=0)
     
     # Predict the class
     print("Predicting the class of the traffic sign...")
-    prediction = model.predict(image_array)
+    prediction = model.predict(input_batch)
     predicted_class = np.argmax(prediction, axis=1)[0]
     print(f"Predicted Class: {predicted_class}")
     
     print("----------- Inference Complete -----------")
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Model Inference for Traffic Sign Recognition")

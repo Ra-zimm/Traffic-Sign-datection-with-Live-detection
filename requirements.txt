@@ -6,3 +6,5 @@ tensorflow
 streamlit
 pillow
 argparse
+opencv-python
+scikit-learn
