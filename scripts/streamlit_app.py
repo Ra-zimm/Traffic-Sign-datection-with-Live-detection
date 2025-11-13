@@ -4,54 +4,17 @@ import tensorflow as tf
 from PIL import Image
 import argparse
 import cv2
+try:
+    from scripts.labels import CLASS_NAMES
+except ModuleNotFoundError:
+    import sys, os
+    _current_dir = os.path.dirname(__file__)
+    _project_root = os.path.abspath(os.path.join(_current_dir, ".."))
+    if _project_root not in sys.path:
+        sys.path.insert(0, _project_root)
+    from scripts.labels import CLASS_NAMES
 
-# GTSRB class names (0-42)
-CLASS_NAMES = [
-    "Speed limit (20km/h)",
-    "Speed limit (30km/h)",
-    "Speed limit (50km/h)",
-    "Speed limit (60km/h)",
-    "Speed limit (70km/h)",
-    "Speed limit (80km/h)",
-    "End of speed limit (80km/h)",
-    "Speed limit (100km/h)",
-    "Speed limit (120km/h)",
-    "No passing",
-    "No passing veh > 3.5 tons",
-    "Right-of-way at intersection",
-    "Priority road",
-    "Yield",
-    "Stop",
-    "No vehicles",
-    "Veh > 3.5 tons prohibited",
-    "No entry",
-    "General caution",
-    "Dangerous curve left",
-    "Dangerous curve right",
-    "Double curve",
-    "Bumpy road",
-    "Slippery road",
-    "Road narrows on the right",
-    "Road work",
-    "Traffic signals",
-    "Pedestrians",
-    "Children crossing",
-    "Bicycles crossing",
-    "Beware of ice/snow",
-    "Wild animals crossing",
-    "End speed + passing limits",
-    "Turn right ahead",
-    "Turn left ahead",
-    "Ahead only",
-    "Go straight or right",
-    "Go straight or left",
-    "Keep right",
-    "Keep left",
-    "Roundabout mandatory",
-    "End of no passing",
-    "End no passing veh > 3.5 tons",
-    "Unknown"
-]
+# CLASS_NAMES imported from scripts.labels
 
 
 def run(args):

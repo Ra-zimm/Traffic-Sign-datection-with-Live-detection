@@ -105,6 +105,13 @@ To launch the Streamlit application for interactive traffic sign recognition:
 streamlit run scripts/streamlit_app.py -- --model_path models/best_model.h5
 ```
 
+## live Detectigg Using camera
+can customize thresh0ld and camera 
+python main.py --live --camer 1 --threshold 0.8
+
+for keeping delay while detecting
+python main.py --live --cooldown 2     
+
 
 ### Notes
 - **Image Paths**: Ensure to replace `data/Train/00000.png`, etc., with actual paths to your images.
