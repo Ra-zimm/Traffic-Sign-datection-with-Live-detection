@@ -8,3 +8,4 @@ pillow
 argparse
 opencv-python
 scikit-learn
+tqdm

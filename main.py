@@ -1,5 +1,5 @@
 import argparse
-from scripts import data_preprocessing, model_training, evaluation, inference, streamlit_app, eda
+from scripts import data_preprocessing, model_training, evaluation, inference, streamlit_app, eda,live_detect
 
 def main(args):
     if args.data:
@@ -25,15 +25,24 @@ def main(args):
     if args.streamlit:
         print("----------- Starting Streamlit App -----------")
         streamlit_app.run(args)
+    
+    if args.live:
+        print("----------- Starting Live Detection -----------")
+        live_detect.run(args)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Traffic Sign Recognition Pipeline")
+    parser.add_argument('--live', action='store_true', help='Run live detection from webcam')
     parser.add_argument('--data', action='store_true', help='Run data preprocessing step')
     parser.add_argument('--eda', action='store_true', help='Run EDA step')
     parser.add_argument('--training', action='store_true', help='Run model training step')
     parser.add_argument('--evaluation', action='store_true', help='Run model evaluation step')
     parser.add_argument('--inference', action='store_true', help='Run model inference step')
     parser.add_argument('--streamlit', action='store_true', help='Run Streamlit app')
+    parser.add_argument('--camera', type=int, default=0, help='Camera index for live detection')
+    parser.add_argument('--threshold', type=float, default=0.6, help='Confidence threshold for live predictions')
+    parser.add_argument('--labels_path', type=str, help='Path to JSON mapping of class_id to name')
+    parser.add_argument('--cooldown', type=float, default=0.0, help='Seconds to wait after a prediction')
     parser.add_argument('--data_dir', type=str, default='data', help='Directory of the data')
     parser.add_argument('--model_dir', type=str, default='models', help='Directory to save models')
     parser.add_argument('--output_dir', type=str, default='outputs', help='Directory for outputs')
@@ -41,6 +50,7 @@ if __name__ == '__main__':
     parser.add_argument('--epochs', type=int, default=20, help='Number of epochs for training')
     parser.add_argument('--batch_size', type=int, default=64, help='Batch size for training')
     parser.add_argument('--learning_rate', type=float, default=0.001, help='Learning rate for training')
+    parser.add_argument('--image_path', type=str, help='Path to a single test image for inference')
     args = parser.parse_args()
-    
+
     main(args)
