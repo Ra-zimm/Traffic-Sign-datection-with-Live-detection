@@ -52,5 +52,4 @@ if __name__ == '__main__':
     parser.add_argument('--learning_rate', type=float, default=0.001, help='Learning rate for training')
     parser.add_argument('--image_path', type=str, help='Path to a single test image for inference')
     args = parser.parse_args()
-
     main(args)
